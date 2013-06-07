@@ -30,7 +30,7 @@ public:
                    const OpenGLPixelFormat& pixFormat,
                    void* contextToShare)
     {
-        NSOpenGLPixelFormatAttribute attribs[] =
+        /*NSOpenGLPixelFormatAttribute attribs[] =
         {
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAMPSafe,
@@ -46,6 +46,25 @@ public:
             (NSOpenGLPixelFormatAttribute) pixFormat.multisamplingLevel,
             0
         };
+		*/
+		NSOpenGLPixelFormatAttribute attribs[] =
+		{
+			NSOpenGLPFADoubleBuffer,
+			NSOpenGLPFAMPSafe,
+			NSOpenGLPFAClosestPolicy,
+			NSOpenGLPFANoRecovery,
+			NSOpenGLPFAColorSize,   (NSOpenGLPixelFormatAttribute) (pixFormat.redBits + pixFormat.greenBits + pixFormat.blueBits),
+			NSOpenGLPFAAlphaSize,   (NSOpenGLPixelFormatAttribute) pixFormat.alphaBits,
+			NSOpenGLPFADepthSize,   (NSOpenGLPixelFormatAttribute) pixFormat.depthBufferBits,
+			NSOpenGLPFAStencilSize, (NSOpenGLPixelFormatAttribute) pixFormat.stencilBufferBits,
+			NSOpenGLPFAAccumSize,   (NSOpenGLPixelFormatAttribute) (pixFormat.accumulationBufferRedBits + pixFormat.accumulationBufferGreenBits
+										+ pixFormat.accumulationBufferBlueBits + pixFormat.accumulationBufferAlphaBits),
+			// NSOpenGLPFAOpenGLProfile, (NSOpenGLPixelFormatAttribute) NSOpenGLProfileVersion3_2Core,
+			pixFormat.multisamplingLevel > 0 ? NSOpenGLPFASamples : (NSOpenGLPixelFormatAttribute) 0,
+			(NSOpenGLPixelFormatAttribute) pixFormat.multisamplingLevel,
+			pixFormat.multisamplingLevel > 0 ? NSOpenGLPFASampleBuffers : (NSOpenGLPixelFormatAttribute) 0, (NSOpenGLPixelFormatAttribute)1,
+			0
+		};
 
         NSOpenGLPixelFormat* format = [[NSOpenGLPixelFormat alloc] initWithAttributes: attribs];
 
